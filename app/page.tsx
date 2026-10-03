@@ -46,7 +46,7 @@ function Header() {
   return <header className="sticky top-0 z-40 border-b border-[#e7e7e7]/80 bg-white/95 backdrop-blur-sm">
     <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 lg:px-8">
       <Link href="/" className="flex items-center gap-2.5 font-semibold tracking-tight" onClick={() => setOpen(false)}>
-        <span className="flex size-9 items-center justify-center rounded-xl bg-[#151515] text-[#dfff4f]"><Play className="size-4 fill-current" /></span>
+        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Adigun%20Video%20Lab%20Emblem-TMQFob4TY3lw2DvbhGInLwV0TZKhsE.png" alt="Adigun Video Lab" className="size-9 rounded-xl object-cover" />
         <span>Adigun <span className="text-[#e86f00]">Video Lab</span></span>
       </Link>
       <nav className="hidden items-center gap-8 text-sm font-medium text-[#6b7280] md:flex">
