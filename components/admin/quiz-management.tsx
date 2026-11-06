@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Check, ChevronDown, Edit3, Filter, Plus, Search, Trash2, X } from 'lucide-react'
 
 type Question = { prompt: string; options: string[]; correct: number; marks: number }
@@ -22,6 +22,9 @@ export function QuizManagement() {
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState('All status')
   const [editing, setEditing] = useState<Quiz | null>(null)
+  useEffect(() => {
+    window.localStorage.setItem('adigun-mock-quizzes', JSON.stringify(quizzes))
+  }, [quizzes])
   const filtered = useMemo(() => quizzes.filter((quiz) => (quiz.title + quiz.course + quiz.lesson).toLowerCase().includes(query.toLowerCase()) && (status === 'All status' || quiz.status === status)), [quizzes, query, status])
 
   function saveQuiz() {
