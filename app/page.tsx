@@ -52,7 +52,7 @@ function Header() {
       <nav className="hidden items-center gap-8 text-sm font-medium text-[#6b7280] md:flex">
         <Link className="transition-colors hover:text-[#151515]" href="/program">Program</Link>
         <Link className="transition-colors hover:text-[#151515]" href="/tools">AI Tools</Link>
-        <Link className="transition-colors hover:text-[#151515]" href="/pricing">Pricing</Link>
+        <Link className="transition-colors hover:text-[#151515]" href="/pricing">Pricing</Link><Link className="transition-colors hover:text-[#151515]" href="/verify-certificate">Verify Certificate</Link>
       </nav>
       <div className="hidden items-center gap-3 md:flex"><Link className="px-3 py-2 text-sm font-medium" href="#footer">Login</Link><Link className="rounded-full bg-[#151515] px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5" href="/apply">Apply to Join <ArrowRight className="ml-1 inline size-4" /></Link></div>
       <button aria-label={open ? 'Close menu' : 'Open menu'} className="rounded-lg p-2 md:hidden" onClick={() => setOpen(!open)}>{open ? <X /> : <Menu />}</button>
