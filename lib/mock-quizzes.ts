@@ -3,6 +3,7 @@ export type MockQuestion = {
   options: string[]
   correct: number
   marks: number
+  explanation?: string
 }
 
 export type MockQuiz = {
@@ -28,9 +29,9 @@ export const mockQuizzes: MockQuiz[] = [
     passMark: 70,
     instructions: 'Choose the best answer for each question. You can review your answers before submitting.',
     questions: [
-      { prompt: 'What does a timeline organize?', options: ['Clips and layers', 'Passwords', 'Camera batteries', 'Invoices'], correct: 0, marks: 5 },
-      { prompt: 'Which edit removes an unwanted section between two clips?', options: ['A cut', 'A fade-out', 'A title card', 'A color grade'], correct: 0, marks: 5 },
-      { prompt: 'What should you check before exporting?', options: ['The sequence and audio', 'Your inbox only', 'The keyboard color', 'The file name length'], correct: 0, marks: 5 },
+      { prompt: 'What does a timeline organize?', options: ['Clips and layers', 'Passwords', 'Camera batteries', 'Invoices'], correct: 0, marks: 5, explanation: 'A timeline places clips, audio and layers in sequence so the edit can be shaped over time.' },
+      { prompt: 'Which edit removes an unwanted section between two clips?', options: ['A cut', 'A fade-out', 'A title card', 'A color grade'], correct: 0, marks: 5, explanation: 'A cut removes or joins footage directly; transitions and grades change presentation rather than remove the section.' },
+      { prompt: 'What should you check before exporting?', options: ['The sequence and audio', 'Your inbox only', 'The keyboard color', 'The file name length'], correct: 0, marks: 5, explanation: 'A final sequence and audio check catches missing clips, timing issues and muted tracks before delivery.' },
     ],
   },
   {

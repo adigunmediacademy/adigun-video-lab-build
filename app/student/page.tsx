@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight, BookOpen, CheckCircle2, Clock3, FileText, PlayCircle, ClipboardCheck } from 'lucide-react'
+import { QuizHistory } from '@/components/student/quiz-history'
 
 const courses = [
   { title: 'Video Editing Foundations', meta: '6 lessons · 2h 40m', progress: 72, tone: 'bg-[#fff1dc]' },
@@ -13,6 +16,7 @@ export default function StudentDashboard() {
       <div className="mt-8 grid gap-4 sm:grid-cols-3"><Stat icon={BookOpen} value="2" label="Courses enrolled" /><Stat icon={CheckCircle2} value="7" label="Lessons completed" /><Stat icon={Clock3} value="4h 35m" label="Learning time" /></div>
       <section className="mt-10"><div className="flex items-center justify-between"><h2 className="text-xl font-bold">Continue learning</h2><Link href="/student/courses" className="text-sm font-semibold text-[#e86f00]">View all</Link></div><div className="mt-4 grid gap-4 lg:grid-cols-2">{courses.map(course => <Link href="/student/courses/video-editing-foundations" key={course.title} className="group rounded-2xl border border-[#e7e7e7] bg-white p-5 transition hover:-translate-y-0.5 hover:border-[#cfcfcf]"><div className={`flex h-28 items-center justify-center rounded-xl ${course.tone}`}><PlayCircle className="size-10 text-[#151515]" /></div><div className="mt-5 flex items-start justify-between gap-4"><div><h3 className="font-bold group-hover:text-[#e86f00]">{course.title}</h3><p className="mt-1 text-sm text-[#6b7280]">{course.meta}</p></div><span className="text-sm font-bold">{course.progress}%</span></div><div className="mt-4 h-2 overflow-hidden rounded-full bg-[#eeeeeb]"><div className="h-full rounded-full bg-[#e86f00]" style={{ width: `${course.progress}%` }} /></div></Link>)}</div></section>
       <section className="mt-10"><div className="flex items-center justify-between"><h2 className="text-xl font-bold">Ready to test your skills?</h2><span className="text-sm text-[#6b7280]">2 available</span></div><Link href="/student/quizzes/1" className="mt-4 flex items-center gap-4 rounded-2xl border border-[#e7e7e7] bg-white p-5 transition hover:-translate-y-0.5 hover:border-[#cfcfcf]"><div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-[#fff1dc]"><ClipboardCheck className="size-5 text-[#e86f00]" /></div><div className="min-w-0 flex-1"><h3 className="font-bold">Editing Fundamentals</h3><p className="mt-1 text-sm text-[#6b7280]">3 questions · 20 min · 70% to pass</p></div><ArrowRight className="size-4 text-[#9ca3af]" /></Link></section>
+      <QuizHistory />
       <section className="mt-10"><h2 className="text-xl font-bold">Your next steps</h2><div className="mt-4 grid gap-3 md:grid-cols-2"><Action href="/student/assignments" icon={FileText} title="Submit an assignment" text="Your first social video brief is ready for review." /><Action href="/tools" icon={PlayCircle} title="Explore creator tools" text="Find the right tools to move your idea forward." /></div></section>
     </div>
   </main>
