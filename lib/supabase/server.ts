@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export async function createSupabaseServerClient() {
   const cookieStore = await cookies()
@@ -8,6 +9,7 @@ export async function createSupabaseServerClient() {
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
+      cookieOptions: { secure: process.env.NODE_ENV === 'production' },
       cookies: {
         getAll() {
           return cookieStore.getAll()
@@ -24,7 +26,36 @@ export async function createSupabaseServerClient() {
   )
 }
 
+export async function requireRole(role: 'admin' | 'student') {
+  const supabase = await createSupabaseServerClient()
+  const { data: { user }, error: userError } = await supabase.auth.getUser()
+  const dashboard = role === 'admin' ? '/admin' : '/student'
+
+  if (userError || !user) {
+    redirect(`/auth/login?next=${encodeURIComponent(dashboard)}`)
+  }
+
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('id, role, full_name, email')
+    .eq('id', user.id)
+    .maybeSingle()
+
+  if (profileError || !profile || (profile.role !== 'admin' && profile.role !== 'student')) {
+    redirect('/auth/login?error=profile')
+  }
+
+  if (profile.role !== role) {
+    redirect(profile.role === 'admin' ? '/admin' : '/student')
+  }
+
+  return { supabase, user, profile, isAdmin: profile.role === 'admin' }
+}
+
 export async function requireAdmin() {
-  // Admin pages are intentionally frontend-only until the real auth layer is enabled.
-  return { supabase: null, user: { id: 'mock-admin', email: 'admin@adigunvideolab.com' }, isAdmin: true }
+  return requireRole('admin')
+}
+
+export async function requireStudent() {
+  return requireRole('student')
 }
