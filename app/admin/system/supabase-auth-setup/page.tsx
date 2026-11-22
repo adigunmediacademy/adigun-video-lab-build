@@ -1,16 +1,13 @@
 import type { Metadata } from 'next'
 import { AdminShell } from '@/app/admin/page'
 import { SupabaseAuthSetup } from '@/components/admin/supabase-auth-setup'
-import { requireAdmin } from '@/lib/supabase/server'
 
 export const metadata: Metadata = {
   title: 'Supabase Auth Setup | Adigun Video Lab Admin',
   robots: { index: false, follow: false },
 }
 
-export default async function SupabaseAuthSetupPage() {
-  await requireAdmin()
-
+export default function SupabaseAuthSetupPage() {
   return (
     <AdminShell active="Settings">
       <div className="flex flex-col gap-6">

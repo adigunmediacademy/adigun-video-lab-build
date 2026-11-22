@@ -1,5 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 
 export async function createSupabaseServerClient() {
@@ -30,9 +30,14 @@ export async function requireRole(role: 'admin' | 'student') {
   const supabase = await createSupabaseServerClient()
   const { data: { user }, error: userError } = await supabase.auth.getUser()
   const dashboard = role === 'admin' ? '/admin' : '/student'
+  const requestedPath = (await headers()).get('x-app-pathname')
+  const returnPath = requestedPath &&
+    (requestedPath === dashboard || requestedPath.startsWith(`${dashboard}/`))
+    ? requestedPath
+    : dashboard
 
   if (userError || !user) {
-    redirect(`/auth/login?next=${encodeURIComponent(dashboard)}`)
+    redirect(`/auth/login?next=${encodeURIComponent(returnPath)}`)
   }
 
   const { data: profile, error: profileError } = await supabase
