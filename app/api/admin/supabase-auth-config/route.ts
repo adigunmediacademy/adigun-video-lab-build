@@ -29,6 +29,31 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
+function getVercelPreviewOrigins() {
+  const origins = new Set<string>()
+  if (process.env.VERCEL_ENV !== 'preview') return origins
+
+  for (const hostname of [process.env.VERCEL_URL, process.env.VERCEL_BRANCH_URL]) {
+    if (!hostname) continue
+
+    try {
+      const previewUrl = new URL(`https://${hostname}`)
+      if (
+        previewUrl.hostname !== hostname ||
+        previewUrl.host !== hostname ||
+        !previewUrl.hostname.endsWith('.vercel.app')
+      ) {
+        continue
+      }
+      origins.add(previewUrl.origin)
+    } catch {
+      continue
+    }
+  }
+
+  return origins
+}
+
 function isAllowedOrigin(request: Request) {
   const requestUrl = new URL(request.url)
   const origin = request.headers.get('origin')
@@ -38,7 +63,8 @@ function isAllowedOrigin(request: Request) {
     'https://www.adigunvideolab.com',
     'https://adigunvideolab.com',
   ])
-  if (productionOrigins.has(origin)) return true
+  if (productionOrigins.has(requestUrl.origin)) return true
+  if (getVercelPreviewOrigins().has(requestUrl.origin)) return true
 
   return process.env.NODE_ENV !== 'production' &&
     (requestUrl.hostname === 'localhost' || requestUrl.hostname === '127.0.0.1')
