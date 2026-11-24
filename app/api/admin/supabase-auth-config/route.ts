@@ -82,7 +82,8 @@ export async function POST(request: Request) {
     return jsonError(403, 'Request origin is not allowed.')
   }
 
-  if (process.env.SUPABASE_AUTH_CONFIG_SETUP_ENABLED !== 'true') {
+  const diagnosticsOnly = new URL(request.url).searchParams.get('diagnostics') === '1'
+  if (!diagnosticsOnly && process.env.SUPABASE_AUTH_CONFIG_SETUP_ENABLED !== 'true') {
     return jsonError(404, 'Temporary setup utility is disabled.')
   }
 
@@ -101,6 +102,23 @@ export async function POST(request: Request) {
 
     if (profileError || profile?.role !== 'admin') {
       return jsonError(403, 'Administrator access required.')
+    }
+
+    if (diagnosticsOnly) {
+      const setupFlag = process.env.SUPABASE_AUTH_CONFIG_SETUP_ENABLED
+      return NextResponse.json(
+        {
+          ok: true,
+          diagnostics: {
+            setupFlagPresent: typeof setupFlag === 'string',
+            setupFlagIsTrue: setupFlag === 'true',
+            vercelEnv: process.env.VERCEL_ENV ?? null,
+            vercelGitCommitRef: process.env.VERCEL_GIT_COMMIT_REF ?? null,
+            vercelGitCommitSha: process.env.VERCEL_GIT_COMMIT_SHA ?? null,
+          },
+        },
+        { headers: { 'Cache-Control': 'no-store' } },
+      )
     }
 
     const token = process.env.SUPABASE_MANAGEMENT_API_TOKEN
