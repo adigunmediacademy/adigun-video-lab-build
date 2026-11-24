@@ -73,7 +73,7 @@ export function SupabaseAuthSetup() {
           <p className="text-sm font-semibold text-[#e86f00]">Temporary system utility</p>
           <h2 className="mt-1 text-xl font-bold tracking-tight">Supabase Auth configuration</h2>
           <p className="mt-2 text-sm leading-6 text-[#6b7280]">
-            Update the Site URL and add the academy callback URLs while preserving existing redirect URLs. Other Auth settings will not be changed.
+            Set the Site URL to this Preview deployment and add its callback URL while preserving existing redirect URLs. Other Auth settings will not be changed.
           </p>
         </div>
       </div>
@@ -83,14 +83,11 @@ export function SupabaseAuthSetup() {
         <dl className="mt-3 flex flex-col gap-3">
           <div>
             <dt className="text-xs font-medium uppercase tracking-wide text-[#6b7280]">Site URL</dt>
-            <dd className="mt-1 break-all font-medium">https://www.adigunvideolab.com</dd>
+            <dd className="mt-1 break-all font-medium">https://adigun-video-lab-build-56uzeajzj.vercel.app</dd>
           </div>
           <div>
-            <dt className="text-xs font-medium uppercase tracking-wide text-[#6b7280]">Redirect URLs to add</dt>
-            <dd className="mt-1 flex flex-col gap-1 break-all font-medium">
-              <span>https://www.adigunvideolab.com/auth/callback</span>
-              <span>https://adigunvideolab.com/auth/callback</span>
-            </dd>
+            <dt className="text-xs font-medium uppercase tracking-wide text-[#6b7280]">Redirect URL</dt>
+            <dd className="mt-1 break-all font-medium">https://adigun-video-lab-build-56uzeajzj.vercel.app/auth/callback</dd>
           </div>
         </dl>
       </div>

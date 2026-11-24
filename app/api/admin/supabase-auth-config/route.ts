@@ -2,10 +2,9 @@ import { NextResponse } from 'next/server'
 import { createSupabaseServerClient } from '@/lib/supabase/server'
 
 const PROJECT_REF = 'fytswihtsidsqtlhgzoo'
-const SITE_URL = 'https://www.adigunvideolab.com'
+const SITE_URL = 'https://adigun-video-lab-build-56uzeajzj.vercel.app'
 const REQUIRED_REDIRECT_URLS = [
-  'https://www.adigunvideolab.com/auth/callback',
-  'https://adigunvideolab.com/auth/callback',
+  'https://adigun-video-lab-build-56uzeajzj.vercel.app/auth/callback',
 ]
 const MANAGEMENT_API_URL = `https://api.supabase.com/v1/projects/${PROJECT_REF}/config/auth`
 
